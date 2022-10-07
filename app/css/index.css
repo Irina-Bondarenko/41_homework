@@ -1,65 +1,89 @@
 body {
-    background-color: lightsteelblue;
+  background-color: lightsteelblue;
 }
 
 .mainWindow {
-padding-top: 30px;
-    width: 80%;
-    margin: 0 auto;
-
+  padding-top: 30px;
+  width: 80%;
+  margin: 0 auto;
 }
 
 .form-control {
-    line-height: 0.5;
-    padding: 17px 10px 10px 10px;
+  line-height: 0.5;
+  padding: 17px 10px 10px 10px;
 }
 
 .btn-secondary {
-    background-color: #e9ecef;
-    color: #212529;
+  background-color: #e9ecef;
+  color: #212529;
 }
 
 .info {
-    background-color: darkslateblue;
-
+  background-color: darkslateblue;
 }
 
 #phoneBook {
-    background-color: darkgrey;
-    width: 500px;
-    margin: 0 auto;
-
-
+  background-color: darkgrey;
+  width: 475px;
+  margin: 0 auto;
 }
 
 .phoneCard-wrapper {
-    background-color: #e9ecef;
-    border: 2px solid black;
+  background-color: #e9ecef;
+  border: 2px solid black;
+}
+
+.phoneCard-wrapper .phone-card {
+  font-size: 20px;
+  text-align: center;
+  line-height: 35px;
 }
 
 .phoneCard {
-    margin: 0;
+  margin: 0;
 }
 
 .phoneCard button {
-    margin: 5px 5px;
+  margin: 5px 5px;
 }
 
 .buttons-wrapper {
-    background-color: slategrey;
-    border: 2px solid black;
+  background-color: slategrey;
+}
+
+.buttons-wrapper .remove-phoneCard {
+  background-color: indianred;
+  border-radius: 10px;
+  width: 80px;
+}
+
+.buttons-wrapper .info-phoneCard {
+  background-color: lightblue;
+  width: 80px;
+  border-radius: 10px;
+}
+
+.buttons-wrapper .edit-phoneCard {
+  background-color: darkseagreen;
+  width: 80px;
+  border-radius: 10px;
 }
 
 .input-group-searching {
-    width: 500px;
-    margin: 0 auto;
+  width: 500px;
+  margin: 0 auto;
 }
 
 .hide {
-    display: none;
+  display: none;
 }
 
-
 .un-hide {
-    display: block;
+  display: block;
+}
+
+#addToPhoneBookButton {
+  width: 125px;
+  line-height: 18px;
+  background-color: bisque;
 }
