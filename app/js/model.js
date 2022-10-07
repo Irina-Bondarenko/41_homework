@@ -79,23 +79,9 @@ function model() {
             return this.infoPhoneCard;
         },
 
-        inputsBlocking () {
 
-            const exampleModalInfo = document.querySelector("#exampleModalInfo");
-            exampleModalInfo.querySelector("[name=inputName]").disabled = true;
-            exampleModalInfo.querySelector("[name=inputPhone]").disabled = true;
-            exampleModalInfo.querySelector("[name=inputJob]").disabled = true;
 
-        },
 
-        inputsUnBlocking () {
-
-            const exampleModalInfo = document.querySelector("#exampleModalInfo");
-            exampleModalInfo.querySelector("[name=inputName]").disabled = false;
-            exampleModalInfo.querySelector("[name=inputPhone]").disabled = false;
-            exampleModalInfo.querySelector("[name=inputJob]").disabled = false;
-
-        },
 
 
         init(dbKey) { //textareaSelector '#formControl'

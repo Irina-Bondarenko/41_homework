@@ -2,6 +2,9 @@
 
 function controller (view, model, payload) {
 
+    const hideSwitcher = "hide";
+    const unHideSwitcher = "un-hide";
+
     const textareaSelector = payload.textareaSelector;
     const phoneContainerSelector = payload.phoneContainerSelector;
     const addToPhoneBookButtonSelector = payload.addToPhoneBookButton;
@@ -36,7 +39,7 @@ function controller (view, model, payload) {
     // formValidation(textarea);
 
     model.init(textareaSelector);
-    view.init(textarea, phoneContainer, modalSaveWindow);
+    view.init(textarea, phoneContainer, modalSaveWindow, modalInfo);
 
 
     const searchHandler = event => {
@@ -49,9 +52,8 @@ function controller (view, model, payload) {
         view.searchItem(value, phoneCards, searchValue);
 
     };
-    const saveToPhoneBookHandler = event => {
-        // console.log(event.target, event.target.value)
-        view.renderModalForPhoneSaving()
+    const saveToPhoneBookModalHandler = event => {
+        view.renderModalWindow(modalSaveWindow)
     };
 
     const fetchFormData = inputs => {
@@ -70,7 +72,7 @@ function controller (view, model, payload) {
 
         if (event.target instanceof HTMLButtonElement) {
             if(event.target.getAttribute('id') === "closeModalButton" || "closeModalButtonImg") {
-                view.unRenderModalForPhoneSaving()
+                view.unRenderModalWindow(modalSaveWindow)
             }
             if(event.target.getAttribute('id') === "submitModalButton") {
 
@@ -103,22 +105,22 @@ function controller (view, model, payload) {
             model.removePhoneCard(phoneCardID);
             view.removePhoneCard(phoneCardID);
         } else if (event.target.classList.contains("info-phoneCard")) {
-            model.inputsBlocking();
+            view.inputsBlocking(true);
 
-            view.deleteSubmitButtonFromInfoModal();
+            view.switcherSubmitButtonFromInfoModal(hideSwitcher);
 
-            const data = model.searchPhoneCard(phoneCardID)
-            view.editPhoneCard(data);
+            // const data = model.searchPhoneCard(phoneCardID)
+            view.renderModalWindow(modalInfo);
 
             const currentPhoneCard = model.returningFoundedPhoneCard();
             view.renderingInfoAboutPhoneCard(currentPhoneCard)
         }
         else if (event.target.classList.contains("edit-phoneCard")) {
-            model.inputsUnBlocking();
+            view.inputsBlocking(false);
 
-            view.replaceSubmitButtonFromInfoModal()
+            view.switcherSubmitButtonFromInfoModal(unHideSwitcher);
             const data = model.searchPhoneCard(phoneCardID)
-            view.editPhoneCard(data);
+            view.renderModalWindow (modalInfo);
 
             const currentPhoneCard = model.returningFoundedPhoneCard();
             view.renderingInfoAboutPhoneCard(currentPhoneCard)
@@ -136,7 +138,7 @@ function controller (view, model, payload) {
         if (event.target instanceof HTMLButtonElement) {
 
             if (event.target.getAttribute('id') === "closeModalButtonInfo" || "closeModalButtonImgInfo") {
-                view.unRenderInfoModalPhoneCard()
+                view.unRenderModalWindow(modalInfo)
             }
 
            if (event.target.getAttribute('id') === "submitModalButtonInfo") {
@@ -166,7 +168,7 @@ function controller (view, model, payload) {
 
 
     textarea.addEventListener('keyup', searchHandler);
-    addToPhoneBookButton.addEventListener('click', saveToPhoneBookHandler);
+    addToPhoneBookButton.addEventListener('click', saveToPhoneBookModalHandler);
     modalSaveWindow.addEventListener('click', modalSaveHandler);
     window.addEventListener("DOMContentLoaded", loadHandler);
     phoneContainer.addEventListener("click", buttonsPhoneCardHandler);

@@ -58,3 +58,8 @@ padding-top: 30px;
 .hide {
     display: none;
 }
+
+
+.un-hide {
+    display: block;
+}

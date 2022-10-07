@@ -28,26 +28,9 @@ function view() {
         textarea: null,
         phoneContainer: null,
         modalSaveWindow: null,
+        modalInfoWindow: null,
         currentPhoneCardID: null,
 
-
-        renderModalForPhoneSaving () {
-            const modalSelector = document.body.querySelector('#exampleModal');
-            modalSelector.classList.add('show');
-            modalSelector.setAttribute("style", "display: block");
-            modalSelector.removeAttribute("aria-hidden");
-            modalSelector.setAttribute("aria-modal", "true");
-            modalSelector.setAttribute("role", "dialog");
-        },
-
-        unRenderModalForPhoneSaving () {
-            const modalSelector = document.body.querySelector('#exampleModal');
-            modalSelector.classList.add('hide');
-            modalSelector.setAttribute("style", "display: none");
-            modalSelector.setAttribute("aria-hidden", "true");
-            modalSelector.removeAttribute("aria-modal");
-            modalSelector.removeAttribute("role");
-        },
 
         renderPhoneCard (data) {
             const itemTemplate = createPhoneCard(data);
@@ -64,11 +47,8 @@ function view() {
         },
 
         clearForm() {
-
-            this.modalSaveWindow.querySelector("[name=inputName]").value="";
-            this.modalSaveWindow.querySelector("[name=inputPhone]").value="";
-            this.modalSaveWindow.querySelector("[name=inputJob]").value="";
-
+            const modalSaveWindowInputs = this.modalSaveWindow.querySelectorAll("input");
+            modalSaveWindowInputs.forEach(item => item.value="");
         },
 
         removePhoneCard (id) {
@@ -76,27 +56,30 @@ function view() {
 
         },
 
-        editPhoneCard (data) {
-            const modalSelector = document.body.querySelector('#exampleModalInfo');
-            modalSelector.classList.add('show');
-            modalSelector.setAttribute("style", "display: block");
-            modalSelector.removeAttribute("aria-hidden");
-            modalSelector.setAttribute("aria-modal", "true");
-            modalSelector.setAttribute("role", "dialog");
+        inputsBlocking (switcherBoolean) {
+            const modalInfoWindowInputs = this.modalInfoWindow.querySelectorAll("input");
+            modalInfoWindowInputs.forEach(item => item.disabled = switcherBoolean);
 
         },
 
-        unRenderInfoModalPhoneCard () {
-            const modalSelector = document.body.querySelector('#exampleModalInfo');
-            modalSelector.classList.add('hide');
-            modalSelector.setAttribute("style", "display: none");
-            modalSelector.setAttribute("aria-hidden", "true");
-            modalSelector.removeAttribute("aria-modal");
-            modalSelector.removeAttribute("role");
+        renderModalWindow (modalInfo) {
+            modalInfo.classList.add('show');
+            modalInfo.setAttribute("style", "display: block");
+            modalInfo.removeAttribute("aria-hidden");
+            modalInfo.setAttribute("aria-modal", "true");
+            modalInfo.setAttribute("role", "dialog");
+
+        },
+
+        unRenderModalWindow(modalInfo) {
+            modalInfo.classList.add('hide');
+            modalInfo.setAttribute("style", "display: none");
+            modalInfo.setAttribute("aria-hidden", "true");
+            modalInfo.removeAttribute("aria-modal");
+            modalInfo.removeAttribute("role");
         },
 
         renderingInfoAboutPhoneCard (currentPhoneCard) {
-
             const data = currentPhoneCard.reduce((acc, item) => {
                 acc = item;
                 return acc;
@@ -104,25 +87,22 @@ function view() {
 
             this.currentPhoneCardID = data.id;
 
-
-            const infoModal = document.querySelector('#exampleModalInfo');
-            infoModal.querySelector("[name=inputName]").value = data.inputName;
-            infoModal.querySelector("[name=inputPhone]").value = data.inputPhone;
-            infoModal.querySelector("[name=inputJob]").value = data.inputJob;
+            this.modalInfoWindow.querySelector("[name=inputName]").value = data.inputName;
+            this.modalInfoWindow.querySelector("[name=inputPhone]").value = data.inputPhone;
+            this.modalInfoWindow.querySelector("[name=inputJob]").value = data.inputJob;
 
         },
 
-        deleteSubmitButtonFromInfoModal () {
-            const infoModal = document.querySelector('#exampleModalInfo');
-            infoModal.querySelector("#submitModalButtonInfo").style = "display:none";
-
+        switcherSubmitButtonFromInfoModal (switcher) {
+               if (switcher === "hide") {
+                   this.modalInfoWindow.querySelector("#submitModalButtonInfo")
+                       .classList.add(switcher);
+               } else {
+                   this.modalInfoWindow.querySelector("#submitModalButtonInfo")
+                       .classList.remove("hide");
+               }
         },
 
-        replaceSubmitButtonFromInfoModal () {
-            const infoModal = document.querySelector('#exampleModalInfo');
-            infoModal.querySelector("#submitModalButtonInfo").style = "display:block";
-
-        },
 
         returningIDToModel () {
             return this.currentPhoneCardID;
@@ -169,9 +149,10 @@ function view() {
 
 
 
-        init(textareaElement, phoneContainer, modalSaveWindow) { // textarea and phoneBook elements
+        init(textareaElement, phoneContainer, modalSaveWindow, modalInfo) { // textarea and phoneBook elements
             this.textarea = textareaElement;
             this.modalSaveWindow = modalSaveWindow;
+            this.modalInfoWindow = modalInfo;
             this.phoneContainer = phoneContainer;
         }
     }
